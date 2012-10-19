@@ -4,10 +4,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class DemoUi extends UI {
@@ -15,7 +15,10 @@ public class DemoUi extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 
-		HorizontalLayout layout = new HorizontalLayout();
+		VerticalLayout layout = new VerticalLayout();
+
+		layout.setMargin(true);
+		layout.setSpacing(true);
 
 		final TextField text = new TextField("", "JUG");
 
