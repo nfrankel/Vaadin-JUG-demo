@@ -2,6 +2,7 @@ package com.morevaadin.vaadin7.jugdemo;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -36,13 +37,15 @@ public class LoginView extends CustomComponent implements View {
 
 			public void buttonClick(ClickEvent event) {
 
-				((DemoUi) UI.getCurrent()).login(loginField.getValue(),
-						passwordField.getValue());
+				((DemoUi) UI.getCurrent()).login(loginField.getValue(), passwordField.getValue());
 			}
 		});
 
 		layout.addComponent(button);
+
+		Page.getCurrent().setTitle("Login...");
 	}
 
-	public void enter(ViewChangeEvent event) {}
+	public void enter(ViewChangeEvent event) {
+	}
 }

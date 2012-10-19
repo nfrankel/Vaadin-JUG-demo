@@ -2,19 +2,20 @@ package com.morevaadin.vaadin7.jugdemo;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 @SuppressWarnings("serial")
 public class MainView extends CustomComponent implements View {
 
 	public MainView() {
-		
+
 		VerticalLayout layout = new VerticalLayout();
 
 		layout.setMargin(true);
@@ -41,7 +42,10 @@ public class MainView extends CustomComponent implements View {
 		layout.addComponent(label);
 
 		setCompositionRoot(layout);
+
+		Page.getCurrent().setTitle("Welcome to Vaadin JUG Demo");
 	}
-	
-	public void enter(ViewChangeEvent event) {}
+
+	public void enter(ViewChangeEvent event) {
+	}
 }
