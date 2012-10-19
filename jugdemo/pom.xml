@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.morevaadin.vaadin7.jugdemo</groupId>
 	<artifactId>jugdemo</artifactId>
-	<version>0.0.8</version>
+	<version>0.0.9</version>
 	<packaging>war</packaging>
 	<name>Vaadin 7 JUG demo</name>
 	<properties>
@@ -24,6 +24,11 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.21</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

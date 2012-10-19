@@ -2,6 +2,14 @@ package com.morevaadin.vaadin7.jugdemo;
 
 import static com.vaadin.ui.Alignment.MIDDLE_RIGHT;
 
+import java.util.Properties;
+
+import com.vaadin.data.Container;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.data.util.sqlcontainer.connection.JDBCConnectionPool;
+import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
+import com.vaadin.data.util.sqlcontainer.query.QueryDelegate;
+import com.vaadin.data.util.sqlcontainer.query.TableQuery;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -12,7 +20,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -45,34 +53,41 @@ public class MainView extends CustomComponent implements View {
 
 		VerticalLayout layout = new VerticalLayout();
 
-		layout.addComponent(topBar);
-
 		layout.setMargin(true);
 		layout.setSpacing(true);
 
-		final TextField text = new TextField("", "JUG");
+		layout.addComponent(topBar);
 
-		Button button = new Button("Say Hello");
+		Table table = new Table();
 
-		final Label label = new Label();
+		table.setWidth("100%");
 
-		button.addClickListener(new ClickListener() {
-
-			public void buttonClick(ClickEvent event) {
-
-				String value = text.getValue();
-
-				label.setValue("Hello " + value + "!");
-			}
-		});
-
-		layout.addComponent(text);
-		layout.addComponent(button);
-		layout.addComponent(label);
+		layout.addComponent(table);
 
 		setCompositionRoot(layout);
 
 		Page.getCurrent().setTitle("Welcome to Vaadin JUG Demo");
+
+		Properties props = new Properties();
+
+		try {
+
+			props.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
+
+			JDBCConnectionPool pool = new SimpleJDBCConnectionPool(props.getProperty("db.driver"),
+					props.getProperty("db.url"), props.getProperty("db.user"),
+					props.getProperty("db.password"));
+
+			QueryDelegate query = new TableQuery("PERSON", pool);
+
+			Container container = new SQLContainer(query);
+
+			table.setContainerDataSource(container);
+
+		} catch (Exception e) {
+
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void enter(ViewChangeEvent event) {}
