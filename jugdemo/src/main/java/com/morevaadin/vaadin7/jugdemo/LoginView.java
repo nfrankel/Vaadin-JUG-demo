@@ -46,6 +46,5 @@ public class LoginView extends CustomComponent implements View {
 		Page.getCurrent().setTitle("Login...");
 	}
 
-	public void enter(ViewChangeEvent event) {
-	}
+	public void enter(ViewChangeEvent event) {}
 }
