@@ -1,8 +1,9 @@
 package com.morevaadin.vaadin7.jugdemo;
 
 import com.vaadin.navigator.Navigator.SimpleViewDisplay;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServiceSession;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
@@ -23,7 +24,7 @@ public class DemoUi extends UI {
 
 		if ("juguser".equals(login)) {
 
-			VaadinServiceSession.getCurrent().setAttribute(String.class, "JUG user");
+			getSession().setAttribute(String.class, "JUG user");
 
 			display.showView(new MainView());
 
@@ -35,6 +36,8 @@ public class DemoUi extends UI {
 
 	void logout() {
 
-		display.showView(new LoginView());
+		VaadinService.getCurrent().fireSessionDestroy(getSession());
+
+		Page.getCurrent().setLocation(".");
 	}
 }
