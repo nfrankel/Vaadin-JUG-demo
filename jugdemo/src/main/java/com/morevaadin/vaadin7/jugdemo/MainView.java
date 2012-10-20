@@ -89,11 +89,15 @@ public class MainView extends CustomComponent implements View {
 			table.setColumnHeader("LAST_NAME", "Last name");
 			table.setColumnHeader("FIRST_NAME", "First name");
 
+			table.addGeneratedColumn("BIRTHDATE", new BirthdateColumnGenerator());
+			table.addGeneratedColumn("MAIL", new EmailColumnGenerator());
+
 		} catch (Exception e) {
 
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void enter(ViewChangeEvent event) {}
+	public void enter(ViewChangeEvent event) {
+	}
 }
