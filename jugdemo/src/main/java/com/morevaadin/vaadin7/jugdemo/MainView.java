@@ -4,7 +4,6 @@ import static com.vaadin.ui.Alignment.MIDDLE_RIGHT;
 
 import java.util.Properties;
 
-import com.vaadin.Application;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.data.util.sqlcontainer.connection.JDBCConnectionPool;
@@ -12,23 +11,21 @@ import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 import com.vaadin.data.util.sqlcontainer.query.QueryDelegate;
 import com.vaadin.data.util.sqlcontainer.query.TableQuery;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinServiceSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Root;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class MainView extends CustomComponent implements View {
-
-	private TextField text = new TextField("", "JUG");
-
-	private Label label = new Label();
 
 	public MainView() {
 
@@ -38,15 +35,15 @@ public class MainView extends CustomComponent implements View {
 
 		Label userLabel = new Label();
 
-		userLabel.setValue(Application.getCurrent().getUser());
+		userLabel.setValue(VaadinServiceSession.getCurrent().getAttribute(String.class));
 
 		Button logoutButton = new Button("Logout");
 
-		logoutButton.addListener(new ClickListener() {
+		logoutButton.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
 
-				((DemoRoot) Root.getCurrent()).logout();
+				((DemoUi) UI.getCurrent()).logout();
 			}
 		});
 
@@ -69,7 +66,7 @@ public class MainView extends CustomComponent implements View {
 
 		setCompositionRoot(layout);
 
-		Root.getCurrent().getPage().setTitle("Welcome to Vaadin JUG Demo");
+		Page.getCurrent().setTitle("Welcome to Vaadin JUG Demo");
 
 		Properties props = new Properties();
 
@@ -100,14 +97,5 @@ public class MainView extends CustomComponent implements View {
 			throw new RuntimeException(e);
 		}
 	}
-
-	public void navigateTo(String fragmentParameters) {
-	}
-
-	public void sayHello() {
-
-		String value = text.getValue();
-
-		label.setValue("Hello " + value + "!");
-	}
+	public void enter(ViewChangeEvent event) {}
 }

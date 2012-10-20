@@ -1,14 +1,16 @@
 package com.morevaadin.vaadin7.jugdemo;
 
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.Root;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
 public class LoginView extends CustomComponent implements View {
@@ -31,20 +33,19 @@ public class LoginView extends CustomComponent implements View {
 
 		Button button = new Button("Enter");
 
-		button.addListener(new ClickListener() {
+		button.addClickListener(new ClickListener() {
 
 			public void buttonClick(ClickEvent event) {
 
-				((DemoRoot) Root.getCurrent()).login(loginField.getValue(),
-						passwordField.getValue());
+				((DemoUi) UI.getCurrent()).login(loginField.getValue(), passwordField.getValue());
 			}
 		});
 
 		layout.addComponent(button);
 
-		Root.getCurrent().getPage().setTitle("Login...");
+		Page.getCurrent().setTitle("Login...");
 	}
 
-	public void navigateTo(String fragmentParameters) {
-	}
+	public void enter(ViewChangeEvent event) {}
 }
+

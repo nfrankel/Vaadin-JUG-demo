@@ -1,44 +1,43 @@
 package com.morevaadin.vaadin7.jugdemo;
 
-import static com.vaadin.ui.Notification.TYPE_ERROR_MESSAGE;
-
-import com.vaadin.Application;
 import com.vaadin.navigator.Navigator.SimpleViewDisplay;
-import com.vaadin.terminal.WrappedRequest;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
-public class DemoRoot extends Root {
+public class DemoUi extends UI {
 
 	private SimpleViewDisplay display = new SimpleViewDisplay();
 
 	@Override
-	protected void init(WrappedRequest request) {
+	protected void init(VaadinRequest request) {
 
 		display.showView(new LoginView());
 
 		setContent(display);
-
-		Application.getCurrent().setLogoutURL(".");
 	}
 
 	void login(String login, String password) {
 
 		if ("juguser".equals(login)) {
 
-			Application.getCurrent().setUser("JUG User");
+			getSession().setAttribute(String.class, "JUG user");
 
 			display.showView(new MainView());
 
 		} else {
 
-			Notification.show("Authentication error", TYPE_ERROR_MESSAGE);
+			Notification.show("Authentication error", Notification.Type.ERROR_MESSAGE);
 		}
 	}
 
 	void logout() {
 
-		Application.getCurrent().close();
+		VaadinService.getCurrent().fireSessionDestroy(getSession());
+
+		Page.getCurrent().setLocation(".");
 	}
 }

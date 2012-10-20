@@ -1,5 +1,7 @@
 package com.morevaadin.vaadin7.jugdemo;
 
+import static java.text.DateFormat.MEDIUM;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -13,6 +15,6 @@ public class BirthdateColumnGenerator implements ColumnGenerator {
 
 		Date value = (Date) source.getContainerProperty(itemId, columnId).getValue();
 
-		return DateFormat.getDateInstance(DateFormat.MEDIUM).format(value);
+		return DateFormat.getDateInstance(MEDIUM).format(value);
 	}
 }
